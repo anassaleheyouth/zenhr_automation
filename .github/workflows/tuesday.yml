@@ -2,8 +2,8 @@ name: ZenHR - Tuesday Remote Work Request
 
 on:
   schedule:
-    # 12:40 الظهر بتوقيت القاهرة مباشرة - GitHub بيتصرف مع التوقيت الصيفي تلقائيًا
-    - cron: "30 13 * * 2"
+    # 12:20 الظهر بتوقيت القاهرة مباشرة - GitHub بيتصرف مع التوقيت الصيفي تلقائيًا
+    - cron: "20 12 * * 2"
       timezone: "Africa/Cairo"
   workflow_dispatch: {}   # عشان تقدر تشغله يدوي من GitHub للتجربة
 

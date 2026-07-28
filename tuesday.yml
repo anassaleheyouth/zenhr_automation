@@ -1,0 +1,33 @@
+name: ZenHR - Tuesday Remote Work Request
+
+on:
+  schedule:
+    # الساعة 12:00 UTC = 3:00 العصر بتوقيت القاهرة (UTC+3 وقت الصيف)
+    # لو التوقيت طلع مختلف بساعة، عدّل الرقم هنا (جرب 13 لو القاهرة UTC+2)
+    - cron: "0 12 * * 2"
+  workflow_dispatch: {}   # عشان تقدر تشغله يدوي من GitHub للتجربة
+
+jobs:
+  send-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
+
+      - name: Run automation
+        env:
+          ZENHR_EMAIL: ${{ secrets.ZENHR_EMAIL }}
+          ZENHR_PASSWORD: ${{ secrets.ZENHR_PASSWORD }}
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+        run: python zenhr_automation.py tuesday

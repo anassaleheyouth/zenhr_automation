@@ -1,11 +1,9 @@
 name: ZenHR - Tuesday Remote Work Request
 
 on:
-  schedule:
-    # 12:20 الظهر بتوقيت القاهرة مباشرة - GitHub بيتصرف مع التوقيت الصيفي تلقائيًا
-    - cron: "20 12 * * 2"
-      timezone: "Africa/Cairo"
-  workflow_dispatch: {}   # عشان تقدر تشغله يدوي من GitHub للتجربة
+  # الـ schedule الداخلي بتاع GitHub اتشال لإنه كان بيتأخر ساعات كتير عن الميعاد.
+  # التشغيل بقى عن طريق خدمة خارجية (cron-job.org) بتنادي على workflow_dispatch في الميعاد بالظبط.
+  workflow_dispatch: {}
 
 jobs:
   send-request:
@@ -20,9 +18,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          playwright install --with-deps chromium
+        run: pip install -r requirements.txt
 
       - name: Run automation
         env:
@@ -30,4 +26,4 @@ jobs:
           ZENHR_PASSWORD: ${{ secrets.ZENHR_PASSWORD }}
           CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
-        run: python zenhr_automation.py tuesday
+        run: python zenhr_automation_api.py tuesday
